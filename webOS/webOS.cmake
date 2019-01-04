@@ -15,7 +15,7 @@
 # VERSION@@@
 #
 
-# Copyright (c) 2012-2018 LG Electronics, Inc.
+# Copyright (c) 2012-2019 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -768,6 +768,12 @@ function(webos_build_daemon)
 		if(EXISTS ${webos_daemon_LAUNCH}.conf.in)
 			set(src_absfiles ${src_absfiles} ${webos_daemon_LAUNCH}.conf.in)
 		endif()
+		if(EXISTS ${webos_daemon_LAUNCH}.sh.in)
+			set(src_absfiles ${src_absfiles} ${webos_daemon_LAUNCH}.sh.in)
+		endif()
+		if(EXISTS ${webos_daemon_LAUNCH}.service.in)
+			set(src_absfiles ${src_absfiles} ${webos_daemon_LAUNCH}.service.in)
+		endif()
 	endif()
 
 	if("${src_absfiles}" STREQUAL "")
@@ -778,7 +784,11 @@ function(webos_build_daemon)
 		string(REGEX REPLACE "\\.in$" "" file_noext ${file})
 		if (${file} MATCHES ".*\\.conf\\.in$")
 			webos_build_configured_file(${file_noext} SYSCONFDIR "init")
-		else()
+		elseif (${file} MATCHES ".*\\.service\\.in$")
+			webos_build_configured_file(${file_noext} SYSCONFDIR "systemd/system")
+		elseif (${file} MATCHES ".*\\.sh\\.in$")
+			webos_build_configured_file(${file_noext} SYSCONFDIR "systemd/system/scripts")
+		else ()
 			webos_build_configured_file(${file_noext} SYSCONFDIR "event.d")
 		endif()
 	endforeach()
