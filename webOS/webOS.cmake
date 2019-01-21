@@ -1201,9 +1201,14 @@ function(webos_build_configured_file basename install_dir_moniker install_subdir
 	file(RELATIVE_PATH basename_relpath ${CMAKE_SOURCE_DIR} ${basename})
 	set(configuredfile ${WEBOS_BINARY_CONFIGURED_DIR}/${basename_relpath})
 
-	# XXX Ideally, ${configuredfile} would be read-only so that developers don't accidentally modify it
 	configure_file(${basename}.in ${configuredfile} @ONLY)
-	install(FILES ${configuredfile} DESTINATION ${installdir})
+	if(${configuredfile} MATCHES ".*\\.sh$")
+		install(PROGRAMS ${configuredfile} DESTINATION ${installdir})
+	else()
+		# XXX Ideally, ${configuredfile} would be read-only so that developers don't accidentally modify it
+		install(FILES ${configuredfile} DESTINATION ${installdir})
+	endif()
+
 endfunction()
 
 
