@@ -494,6 +494,23 @@ macro(_webos_init_install_vars)
 	# The /opt/webos/tests tree contains all installed unit and/or integration test scripts and executables
 	_webos_set_from_env(WEBOS_INSTALL_TESTSDIR                  webos_testsdir                  ${WEBOS_INSTALL_ROOT}/opt/webos/tests)
 
+	# This tree contains subdirectories of various types of customization data
+	_webos_set_from_env(WEBOS_INSTALL_WEBOS_CUSTOMIZATIONDIR              webos_customizationdir                  ${WEBOS_INSTALL_PREFIX}/palm/customization)
+
+	# This is the root of the tree that is accessible to developers who log into a
+	# device with ssh when it is in developer mode. It is where their side-loaded
+	# (webOS and native) apps will be installed for debugging. Everything
+	# under this tree is erased by a NYX_SYSTEM_ERASE_DEVELOPER erasure.
+	_webos_set_from_env(WEBOS_INSTALL_DEVELOPERDIR                        webos_developerdir                      ${WEBOS_INSTALL_MEDIADIR}/developer)
+
+	# This directory is shared by the emulator for network mounting by its host OS
+	_webos_set_from_env(WEBOS_INSTALL_EMULATORSHAREDDIR                   webos_emulatorshareddir                 ${WEBOS_INSTALL_MEDIADIR}/shared)
+
+	# The presence of this file indicates that First Use has been completed.
+	_webos_set_from_env(WEBOS_INSTALL_FIRSTUSESENTINELFILE                webos_firstusesentinelfile              ${WEBOS_INSTALL_SYSMGR_LOCALSTATEDIR}/preferences/ran-firstuse)
+
+	# Path to file which indicate failure to init settingsservice
+	_webos_set_from_env(WEBOS_INSTALL_SETTINGSSERVICE_ERRORSENTINELFILE   webos_settingsservice_errorsentinelfile ${WEBOS_INSTALL_WEBOS_LOCALSTATEDIR}/settingsservice_critical_error)
 endmacro()
 
 
