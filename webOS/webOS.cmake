@@ -491,8 +491,8 @@ macro(_webos_init_install_vars)
 	# Deprecated name for WEBOS_INSTALL_MOUNTABLESTORAGEDIR
 	_webos_set_from_env(WEBOS_INSTALL_LOCALSTORAGEDIR           webos_mountablestoragedir       ${WEBOS_INSTALL_MOUNTABLESTORAGEDIR})
 
-	# The /opt/webos/tests tree contains all installed unit and/or integration test scripts and executables
-	_webos_set_from_env(WEBOS_INSTALL_TESTSDIR                  webos_testsdir                  ${WEBOS_INSTALL_ROOT}/opt/webos/tests)
+	# The /usr/opt/webos/tests tree contains all installed unit and/or integration test scripts and executables
+	_webos_set_from_env(WEBOS_INSTALL_TESTSDIR                  webos_testsdir                  ${WEBOS_INSTALL_PREFIX}/opt/webos/tests)
 
 	# This tree contains subdirectories of various types of customization data
 	_webos_set_from_env(WEBOS_INSTALL_WEBOS_CUSTOMIZATIONDIR              webos_customizationdir                  ${WEBOS_INSTALL_PREFIX}/palm/customization)
