@@ -15,7 +15,7 @@
 # VERSION@@@
 #
 
-# Copyright (c) 2012-2019 LG Electronics, Inc.
+# Copyright (c) 2012-2021 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -424,6 +424,7 @@ macro(_webos_init_install_vars)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DEVAPIPERMISSIONSDIR   webos_sysbus_devapipermissionsdir   ${WEBOS_INSTALL_SYSBUS_DEVDATADIR}/api-permissions.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_CONTAINERSDIR      webos_sysbus_containersdir      ${WEBOS_INSTALL_SYSBUS_DATADIR}/containers.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_PERMISSIONSDIR     webos_sysbus_permissionsdir     ${WEBOS_INSTALL_SYSBUS_DATADIR}/client-permissions.d)
+        _webos_set_from_env(WEBOS_INSTALL_SYSBUS_PROXYAGENTSDIR     webos_sysbus_proxyagentsdir     ${WEBOS_INSTALL_SYSBUS_DATADIR}/proxy-agents.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DYNPERMISSIONSDIR  webos_sysbus_dynpermissionsdir  ${WEBOS_INSTALL_SYSBUS_DYNDATADIR}/client-permissions.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DEVPERMISSIONSDIR  webos_sysbus_devpermissionsdir  ${WEBOS_INSTALL_SYSBUS_DEVDATADIR}/client-permissions.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_ROLESDIR           webos_sysbus_rolesdir           ${WEBOS_INSTALL_SYSBUS_DATADIR}/roles.d)
@@ -1340,6 +1341,7 @@ function(webos_build_system_bus_files)
 	_webos_install_system_bus_files(${source_path} perm.json PERMISSIONSDIR)
 	_webos_install_system_bus_files(${source_path} api.json APIPERMISSIONSDIR)
 	_webos_install_system_bus_files(${source_path} container.json CONTAINERSDIR)
+	_webos_install_system_bus_files(${source_path} proxy-agent.json PROXYAGENTSDIR)
 endfunction()
 
 # Usage: webos_build_db8_files([path-to-db-tree])
