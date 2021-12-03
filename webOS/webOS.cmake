@@ -15,7 +15,7 @@
 # VERSION@@@
 #
 
-# Copyright (c) 2012-2021 LG Electronics, Inc.
+# Copyright (c) 2012-2022 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -436,6 +436,10 @@ macro(_webos_init_install_vars)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_MANIFESTSDIR       webos_sysbus_manifestsdir       ${WEBOS_INSTALL_SYSBUS_DATADIR}/manifests.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DYNMANIFESTSDIR    webos_sysbus_dynmanifestsdir    ${WEBOS_INSTALL_SYSBUS_DYNDATADIR}/manifests.d)
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DEVMANIFESTSDIR    webos_sysbus_devmanifestsdir    ${WEBOS_INSTALL_SYSBUS_DEVDATADIR}/manifests.d)
+	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_INTENTSDIR         webos_sysbus_intentsdir         ${WEBOS_INSTALL_SYSBUS_DATADIR}/intents.d)
+	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_INTENTFILTERSDIR   webos_sysbus_intentfiltersdir   ${WEBOS_INSTALL_SYSBUS_DATADIR}/intent-filters.d)
+	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DYNINTENTFILTERSDIR webos_sysbus_dynintentfiltersdir ${WEBOS_INSTALL_SYSBUS_DYNDATADIR}/intent-filters.d)
+	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_DEVINTENTFILTERSDIR webos_sysbus_devintentfiltersdir ${WEBOS_INSTALL_SYSBUS_DEVDATADIR}/intent-filters.d)
 
 	# Legacy sysbus locations
 	_webos_set_from_env(WEBOS_INSTALL_SYSBUS_PUBSERVICESDIR     webos_sysbus_pubservicesdir     ${WEBOS_INSTALL_DATADIR}/dbus-1/services)
@@ -1342,6 +1346,8 @@ function(webos_build_system_bus_files)
 	_webos_install_system_bus_files(${source_path} api.json APIPERMISSIONSDIR)
 	_webos_install_system_bus_files(${source_path} container.json CONTAINERSDIR)
 	_webos_install_system_bus_files(${source_path} proxy-agent.json PROXYAGENTSDIR)
+	_webos_install_system_bus_files(${source_path} intents.json INTENTSDIR)
+	_webos_install_system_bus_files(${source_path} intent-filter.json INTENTFILTERSDIR)
 endfunction()
 
 # Usage: webos_build_db8_files([path-to-db-tree])
