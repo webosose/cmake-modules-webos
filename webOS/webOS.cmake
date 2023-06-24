@@ -540,7 +540,7 @@ macro(_webos_set_component_version version_string)
 			                    " version (${version_string})")
 		endif()
 	else()
-		set(WEBOS_COMPONENT_VERSION ${version_string} CACHE FORCE "The version of the component")
+		set(WEBOS_COMPONENT_VERSION ${version_string} CACHE STRING "The version of the component" FORCE)
 	endif()
 endmacro()
 
