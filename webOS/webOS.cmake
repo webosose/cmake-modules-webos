@@ -15,7 +15,7 @@
 # VERSION@@@
 #
 
-# Copyright (c) 2012-2022 LG Electronics, Inc.
+# Copyright (c) 2012-2023 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -351,6 +351,8 @@ macro(_webos_init_install_vars)
 	_webos_set_from_env(WEBOS_INSTALL_INFODIR            infodir                  ${WEBOS_INSTALL_DATADIR}/info)
 	_webos_set_from_env(WEBOS_INSTALL_MANDIR             mandir                   ${WEBOS_INSTALL_DATADIR}/man)
 	_webos_set_from_env(WEBOS_INSTALL_DOCDIR             docdir                   ${WEBOS_INSTALL_DATADIR}/doc)
+	_webos_set_from_env(WEBOS_INSTALL_NONARCH_BASE_LIBDIR nonarch_base_libdir     ${WEBOS_INSTALL_ROOT}/lib)
+	_webos_set_from_env(WEBOS_INSTALL_NONARCH_LIBDIR     nonarch_libdir           ${WEBOS_INSTALL_EXEC_PREFIX}/lib)
 
 	# Architecture dependent paths
 	_webos_set_from_env(WEBOS_INSTALL_BINDIR             bindir                   ${WEBOS_INSTALL_EXEC_PREFIX}/bin)
