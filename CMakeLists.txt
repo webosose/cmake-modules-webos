@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018 LG Electronics, Inc.
+# Copyright (c) 2012-2024 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ project(cmake-modules-webos NONE)
 # Make sure we use ourself to build ourself
 include(${CMAKE_SOURCE_DIR}/webOS/webOS.cmake)
 
-set(VERSION_ARGS 1 6 3)
+set(VERSION_ARGS 1 6 4)
 webos_modules_init(${VERSION_ARGS})
 webos_component(${VERSION_ARGS})
 
@@ -67,8 +67,6 @@ install(FILES REFERENCE.md DESTINATION ${CMAKE_ROOT}/Modules/webOS)
 #webos_machine_dep()
 #webos_machine_impl_dep()
 #webos_machine_variant_dep()
-#webos_distro_dep()
-#webos_distro_variant_dep()
 #webos_soc_family_dep()
 #message(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 

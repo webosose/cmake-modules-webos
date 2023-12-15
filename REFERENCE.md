@@ -61,7 +61,7 @@ The first five (executable) lines of your top level `CMakeLists.txt` script
 	project(<name> <lang> [<lang> ...])
 
 	include(webOS/webOS)
-	webos_modules_init(1 6 3)
+	webos_modules_init(1 6 4)
 	webos_component(<major> <minor> <patch> \[QUALIFIER <value>>])
 
 In order, these lines: specify the version of Cmake that you are using to write
@@ -811,76 +811,6 @@ allowing conditional code such as
 
 `WEBOS_TARGET_CORE_OS` can also be used to conditionalize actions within the
 CMake script itself, by testing it with `STREQUAL`.
-
-###webos_distro_dep
-Adds a compiler flag and CMake symbol to indicate the distribution being
-targeted.
-
-	webos_distro_dep()
-
-This function takes the definition of `WEBOS_TARGET_DISTRO` from the CMake
-command line (supplied via `-DWEBOS_TARGET_DISTRO=<value>`) and passes it
-through to the compiler in a form suitable for conditional compilation.
-
-After being invoked, `WEBOS_TARGET_DISTRO` is guaranteed to be defined. It will
-either have the value supplied from the command line, or be set to `none`.
-In addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_DISTRO_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_DISTRO` that can not appear
-in a preprocessor identifier converted to underscores. For example, with a
-command line of
-
-	cmake -DWEBOS_TARGET_DISTRO=webos-wearable
-
-invoking `webos_distro_dep()` will add the compiler flag
-
-	-DWEBOS_TARGET_CORE_DISTRO_WEBOS_WEARABLE
-
-allowing conditional code such as
-
-	#ifdef WEBOS_TARGET_CORE_DISTRO_WEBOS_WEARABLE
-		// building for webOS Wearable distribution
-	#endif
-
-`WEBOS_TARGET_CORE_DISTRO` can also be used to conditionalize actions within the
-CMake script itself, by testing it with `STREQUAL`.
-
-###webos_distro_variant_dep
-Adds a compiler flag and CMake symbol to indicate the variant of the distribution
-being targeted.
-
-	webos_distro_variant_dep()
-
-This function takes the definition of `WEBOS_TARGET_DISTRO_VARIANT` from the CMake
-command line (supplied via `-DWEBOS_TARGET_DISTRO_VARIANT=<value>`) and passes it
-through to the compiler in a form suitable for conditional compilation.
-
-After being invoked, `WEBOS_TARGET_DISTRO_VARIANT` is guaranteed to be defined.
-It will either have the value supplied from the command line, or be set to
-`normal`.  In addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_DISTRO_VARIANT_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_DISTRO_VARIANT` that can not
-appear in a preprocessor identifier converted to underscores. For example, with a
-command line of
-
-	cmake -DWEBOS_TARGET_DISTRO_VARIANT=lite
-
-invoking `webos_distro_variant_dep()` will add the compiler flag
-
-	-DWEBOS_TARGET_CORE_DISTRO_VARIANT_LITE
-
-allowing conditional code such as
-
-	#ifdef WEBOS_TARGET_CORE_DISTRO_VARIANT_LITE
-		// building for "lite" distribution variant
-	#endif
-
-`WEBOS_TARGET_CORE_DISTRO_VARIANT` can also be used to conditionalize actions
-within the CMake script itself, by testing it with `STREQUAL`.
 
 ###webos_include_install_paths
 Create a header file containing all #defines for WEBOS_INSTALL_* variables and

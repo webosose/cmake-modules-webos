@@ -5,17 +5,17 @@
 #
 # Usage:
 #  include(webOS/webOS)
-#  webos_modules_init(1 6 3)
+#  webos_modules_init(1 6 4)
 #
 # Detailed documentation for the latest version is available from:
 # https://github.com/openwebos/cmake-modules-webos/blob/master/REFERENCE.md
 #
 # @@@VERSION
-# 1.6.3
+# 1.6.4
 # VERSION@@@
 #
 
-# Copyright (c) 2012-2023 LG Electronics, Inc.
+# Copyright (c) 2012-2024 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,8 +43,6 @@
 # WEBOS_CONFIG_BUILD_DOCS   - if defined, the "docs" and "install-docs" targets are made dependencies of "all" and "install"
 # WEBOS_INSTALL_ROOT        - the root of the install tree
 # WEBOS_TARGET_CORE_OS      - name of core OS dependency
-# WEBOS_TARGET_DISTRO       - name of distro dependency
-# WEBOS_TARGET_DISTRO_VARIANT - name of distro variant dependency
 # WEBOS_TARGET_MACHINE      - name of machine dependency
 # WEBOS_TARGET_MACHINE_IMPL - name of "machine implementation" dependency
 # WEBOS_TARGET_SOC_FAMILY   - name of SOC family dependency
@@ -61,8 +59,6 @@
 # WEBOS_INSTALL_*           - various locations in the install tree
 # WEBOS_PROJECT_SUMMARY     - the one-line summary of the project set by webos_project_summary()
 # WEBOS_TARGET_CORE_OS      - name of core OS dependency
-# WEBOS_TARGET_DISTRO       - name of distro dependency
-# WEBOS_TARGET_DISTRO_VARIANT - name of distro variant dependency
 # WEBOS_TARGET_MACHINE      - name of machine dependency
 # WEBOS_TARGET_MACHINE_IMPL - name of "machine implementation" dependency
 # WEBOS_TARGET_MACHINE_VARIANT - name of "machine variant" dependency
@@ -1154,18 +1150,6 @@ endmacro()
 macro(webos_soc_family_dep)
 	# Default WEBOS_TARGET_SOC_FAMILY is "none"
 	_webos_add_target_define(WEBOS_TARGET_SOC_FAMILY none)
-endmacro()
-
-
-macro(webos_distro_dep)
-	# Default WEBOS_TARGET_DISTRO for Ubuntu desktop build is "none"
-	_webos_add_target_define(WEBOS_TARGET_DISTRO none)
-endmacro()
-
-
-macro(webos_distro_variant_dep)
-	# Default WEBOS_TARGET_DISTRO_VARIANT for Ubuntu desktop build is "normal"
-	_webos_add_target_define(WEBOS_TARGET_DISTRO_VARIANT normal)
 endmacro()
 
 
