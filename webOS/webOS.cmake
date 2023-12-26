@@ -5,13 +5,13 @@
 #
 # Usage:
 #  include(webOS/webOS)
-#  webos_modules_init(1 6 4)
+#  webos_modules_init(1 6 5)
 #
 # Detailed documentation for the latest version is available from:
 # https://github.com/openwebos/cmake-modules-webos/blob/master/REFERENCE.md
 #
 # @@@VERSION
-# 1.6.4
+# 1.6.5
 # VERSION@@@
 #
 
@@ -42,10 +42,6 @@
 # WEBOS_COMPONENT_VERSION   - the full version string from the build system
 # WEBOS_CONFIG_BUILD_DOCS   - if defined, the "docs" and "install-docs" targets are made dependencies of "all" and "install"
 # WEBOS_INSTALL_ROOT        - the root of the install tree
-# WEBOS_TARGET_CORE_OS      - name of core OS dependency
-# WEBOS_TARGET_MACHINE      - name of machine dependency
-# WEBOS_TARGET_MACHINE_IMPL - name of "machine implementation" dependency
-# WEBOS_TARGET_SOC_FAMILY   - name of SOC family dependency
 
 # Global variables exported to the calling CMakeLists.txt:
 # WEBOS_BINARY_CONFIGURED_DIR - tree under which files processed by configure_file() are placed (its layout mirrors that of
@@ -58,11 +54,6 @@
 # WEBOS_COMPONENT_VERSION   - the full version string
 # WEBOS_INSTALL_*           - various locations in the install tree
 # WEBOS_PROJECT_SUMMARY     - the one-line summary of the project set by webos_project_summary()
-# WEBOS_TARGET_CORE_OS      - name of core OS dependency
-# WEBOS_TARGET_MACHINE      - name of machine dependency
-# WEBOS_TARGET_MACHINE_IMPL - name of "machine implementation" dependency
-# WEBOS_TARGET_MACHINE_VARIANT - name of "machine variant" dependency
-# WEBOS_TARGET_SOC_FAMILY   - name of SOC family dependency
 # ENV{PKG_CONFIG_PATH}      - the setting for PKG_CONFIG_PATH to be placed in the environment for commands invoked by "make"
 
 # TODO: Using PARENT_SCOPE, see if any macros can be turned into functions
@@ -1122,34 +1113,6 @@ macro(_webos_add_target_define name default)
 	message(STATUS "Adding -D${name}_${_define_suffix}")
 	webos_add_compiler_flags(ALL -D${name}_${_define_suffix})
 	unset(_define_suffix)
-endmacro()
-
-
-macro(webos_core_os_dep)
-	# Default WEBOS_TARGET_CORE_OS for Ubuntu desktop build is "ubuntu"
-	_webos_add_target_define(WEBOS_TARGET_CORE_OS ubuntu)
-endmacro()
-
-
-macro(webos_machine_dep)
-	# Default WEBOS_TARGET_MACHINE for Ubuntu desktop build is "standalone"
-	_webos_add_target_define(WEBOS_TARGET_MACHINE standalone)
-endmacro()
-
-
-macro(webos_machine_impl_dep)
-	# Default WEBOS_TARGET_MACHINE_IMPL for Ubuntu desktop build is "guest"
-	_webos_add_target_define(WEBOS_TARGET_MACHINE_IMPL guest)
-endmacro()
-
-macro(webos_machine_variant_dep)
-	# Default WEBOS_TARGET_MACHINE_VARIANT is "none"
-	_webos_add_target_define(WEBOS_TARGET_MACHINE_VARIANT none)
-endmacro()
-
-macro(webos_soc_family_dep)
-	# Default WEBOS_TARGET_SOC_FAMILY is "none"
-	_webos_add_target_define(WEBOS_TARGET_SOC_FAMILY none)
 endmacro()
 
 

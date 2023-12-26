@@ -61,7 +61,7 @@ The first five (executable) lines of your top level `CMakeLists.txt` script
 	project(<name> <lang> [<lang> ...])
 
 	include(webOS/webOS)
-	webos_modules_init(1 6 4)
+	webos_modules_init(1 6 5)
 	webos_component(<major> <minor> <patch> \[QUALIFIER <value>>])
 
 In order, these lines: specify the version of Cmake that you are using to write
@@ -775,43 +775,6 @@ For example
 creates an executable from `file1.c` and `file2.c`, plus the configured
 versions of `file43.c` and `file4.c`.
 
-###webos_core_os_dep
-Adds a compiler flag and CMake symbol to indicate the core operating system
-being targeted
-
-	webos_core_os_dep()
-
-This function takes the definition of `WEBOS_TARGET_CORE_OS` from the CMake
-command line (supplied via `-DWEBOS_TARGET_CORE_OS=<value>`) and passes it
-through to the compiler in a form suitable for conditional compilation.
-
-After being invoked, `WEBOS_TARGET_CORE_OS` is guaranteed to be defined. It will
-either have the value supplied from the command line, or be set to `ubuntu`. In
-addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_CORE_OS_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_CORE_OS` that can not appear
-in a preprocessor identifier converted to underscores. For example, with a
-command line of
-
-	cmake -DWEBOS_TARGET_CORE_OS=rockhopper
-
-invoking `webos_core_os_dep()` will add the compiler flag
-
-	-DWEBOS_TARGET_CORE_OS_ROCKHOPPER
-
-allowing conditional code such as
-
-	#ifdef WEBOS_TARGET_CORE_OS_UBUNTU
-		// running stand-alone
-	#else
-		// Running on hardware
-	#endif
-
-`WEBOS_TARGET_CORE_OS` can also be used to conditionalize actions within the
-CMake script itself, by testing it with `STREQUAL`.
-
 ###webos_include_install_paths
 Create a header file containing all #defines for WEBOS_INSTALL_* variables and
 force it to be included by all C and C++ source files.
@@ -856,167 +819,6 @@ symbols. No validation is performed, and the installed link will not be added
 to `install_manifest.txt` in the binary tree.
 
 **Use at your own risk**
-
-###webos_machine_dep
-Adds a compiler flag and CMake symbol to indicate the machine being targeted
-
-	webos_machine_dep()
-
-This function takes the definition of `WEBOS_TARGET_MACHINE` from the CMake
-command line (supplied via `-DWEBOS_TARGET_MACHINE=<value>`) and passes it
-through to the compiler in a form suitable for conditional compilation.
-
-After being invoked, `WEBOS_TARGET_MACHINE` is guaranteed to be defined. It will
-either have the value supplied from the command line, or be set to `standalone`.
-In addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_MACHINE_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_MACHINE` that can not appear
-in a preprocessor identifier converted to underscores. For example, with a
-command line of
-
-	cmake -DWEBOS_TARGET_MACHINE=qemux86
-
-invoking `webos_machine_dep()` will add the compiler flag
-
-	-DWEBOS_TARGET_MACHINE_QEMUX86
-
-allowing conditional code such as
-
-	#ifdef WEBOS_TARGET_MACHINE_QEMUX86
-		// running on qemux86
-	#endif
-
-`WEBOS_TARGET_MACHINE` can also be used to conditionalize actions within the
-CMake script itself, by testing it with `STREQUAL`.
-
-For older projects, the following CMake commands will define the older
-`MACHINE_<name>` symbols () for the compiler.
-
-	webos_machine_dep()
-	include(webOS/LegacyDefine)
-	...
-	# test WEBOS_TARGET_MACHINE to include or exclude specific files.
-	...
-
-Thus, consider the following combination of CMake command-line (preceded by a
-"$" sign) and CMake **commands** (the rest of it):
-
-	$ cmake -DWEBOS_TARGET_MACHINE=topaz
-
-	webos_machine_dep()
-	include(webOS/LegacyDefine)
-
-	if(${WEBOS_TARGET_MACHINE} STREQUAL "topaz")
-	#    add some source files for the touchpad
-	endif()
-
-Would add the following flags to the compiler command line
-
-	-DWEBOS_TARGET_MACHINE_TOPAZ
-	-DMACHINE_TOPAZ
-
-###webos_machine_impl_dep
-Adds a compiler flag and CMake symbol to indicate the target machine
-implementation, allowing conditionalizing of code and build scripts.
-
-	webos_machine_impl_dep()
-
-This function is takes the definition of `WEBOS_TARGET_MACHINE_IMPL` from the
-CMake command line (supplied via `-DWEBOS_TARGET_MACHINE_IMPL=<value>`) and passes
-it through to the compiler in a form suitable for conditional compilation.
-
-The difference between the target MACHINE and the MACHINE_IMPL refers to the
-logical target vs the actual implementation. The difference between a "machine
-implementation" dependency on `guest` and a core operating system dependency
-is subtle: if there must be alternative behavior when when running on a host OS,
-e.g. simulating booting, then it's the former; if the dependency is on the
-presence of some project, e.g. X11, then it's the latter.
-
-After being invoked, `WEBOS_TARGET_MACHINE_IMPL` is guaranteed to be defined. It
-will either have the value supplied from the command line, or be set to
-`guest`. In addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_MACHINE_IMPL_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_MACHINE_IMPL` that can not
-appear in a preprocessor identifier converted to underscores. For example, with
-a command line of
-
-	cmake -DWEBOS_TARGET_MACHINE_IMPL=emulator
-
-invoking _webos_machine_impl_dep_ will add the compiler flag
-
-	-DWEBOS_TARGET_MACHINE_IMPL_EMULATOR
-
-`WEBOS_TARGET_MACHINE_IMPL` can also be used to conditionalize actions within the
-CMake script itself, by testing it with `STREQUAL`.
-
-For older projects, the following CMake commands will define the older
-`TARGET_<name>` symbols () for the compiler.
-
-	webos_machine_impl_dep()
-	include(webOS/LegacyDefine)
-	...
-	# test WEBOS_TARGET_MACHINE_IMPL to include or exclude specific files.
-	...
-
-Thus, consider the following combination of CMake command-line (preceded by a
-"$" sign) and CMake **commands** (the rest of it):
-
-	$ cmake -DWEBOS_TARGET_MACHINE_IMPL=hardware
-
-	webos_machine_impl_dep()
-	include(webOS/LegacyDefine)
-
-would add the following flags to the compiler command line
-
-	-DWEBOS_TARGET_MACHINE_IMPL_HARDWARE
-	-DTARGET_DEVICE
-
-The following shows the mapping between machine implementation values and
-legacy symbol names:
-
-	Value       New Symbol                           Legacy Symbol
-	hardware    WEBOS_TARGET_MACHINE_IMPL_HARDWARE   TARGET_DEVICE
-	emulator    WEBOS_TARGET_MACHINE_IMPL_EMULATOR   TARGET_EMULATOR
-	guest       WEBOS_TARGET_MACHINE_IMPL_GUEST      TARGET_DESKTOP
-
-###webos_machine_variant_dep
-Adds a compiler flag and CMake symbol to indicate the variant of machine
-being targeted.
-
-	webos_machine_variant_dep()
-
-This function takes the definition of `WEBOS_TARGET_MACHINE_VARIANT` from the CMake
-command line (supplied via `-DWEBOS_TARGET_MACHINE_VARIANT=<value>`) and passes it
-through to the compiler in a form suitable for conditional compilation.
-
-After being invoked, `WEBOS_TARGET_MACHINE_VARIANT` is guaranteed to be defined.
-It will either have the value supplied from the command line, or be set to
-`normal`.  In addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_MACHINE_VARIANT_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_MACHINE_VARIANT` that can not
-appear in a preprocessor identifier converted to underscores. For example, with a
-command line of
-
-	cmake -DWEBOS_TARGET_MACHINE_VARIANT=eztv
-
-invoking `webos_machine_variant_dep()` will add the compiler flag
-
-	-DWEBOS_TARGET_MACHINE_VARIANT_EZTV
-
-allowing conditional code such as
-
-	#ifdef WEBOS_TARGET_MACHINE_VARIANT_EZTV
-		// building for "eztv" machine variant
-	#endif
-
-`WEBOS_TARGET_MACHINE_VARIANT` can also be used to conditionalize actions
-within the CMake script itself, by testing it with `STREQUAL`.
 
 ###webos_make_binary_path_absolute and webos_make_source_path_absolute
 Convert a relative path to an absolute path with respect to the root directory
@@ -1115,40 +917,6 @@ During development, it is also common to install dependencies into a tree under
 the user's home directory and provide a common override of `WEBOS_INSTALL_ROOT`
 to all CMake command lines. For that reason, the provided path is also added
 to `PKG_CONFIG_PATH`.
-
-###webos_soc_family_dep
-Adds a compiler flag and CMake symbol to indicate the SOC family being targeted.
-
-	webos_soc_family_dep()
-
-This function takes the definition of `WEBOS_TARGET_SOC_FAMILY` from the CMake
-command line (supplied via `-DWEBOS_TARGET_SOC_FAMILY=<value>`) and passes it
-through to the compiler in a form suitable for conditional compilation.
-
-After being invoked, `WEBOS_TARGET_SOC_FAMILY` is guaranteed to be defined.
-It will either have the value supplied from the command line, or be set to
-`none`. In addition, a compiler flag will have been added of the form
-
-	-DWEBOS_TARGET_SOC_FAMILY_<uppercased-value>
-
-with any characters from the value of `WEBOS_TARGET_SOC_FAMILY` that can not
-appear in a preprocessor identifier converted to underscores. For example, with
-a command line of
-
-	cmake -DWEBOS_TARGET_SOC_FAMILY=lg1
-
-invoking `webos_soc_family_dep()` will add the compiler flag
-
-	-DWEBOS_TARGET_SOC_FAMILY_LG1
-
-allowing conditional code such as
-
-	#ifdef WEBOS_TARGET_SOC_FAMILY_LG1
-		// building for the "lg1" family of SoC-s
-	#endif
-
-`WEBOS_TARGET_SOC_FAMILY` can also be used to conditionalize actions within the
-CMake script itself, by testing it with `STREQUAL`.
 
 ###webos_upstream_from_repo
 Specify the version number for the FOSS project being configured, and check

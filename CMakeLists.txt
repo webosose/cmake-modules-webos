@@ -27,7 +27,7 @@ project(cmake-modules-webos NONE)
 # Make sure we use ourself to build ourself
 include(${CMAKE_SOURCE_DIR}/webOS/webOS.cmake)
 
-set(VERSION_ARGS 1 6 4)
+set(VERSION_ARGS 1 6 5)
 webos_modules_init(${VERSION_ARGS})
 webos_component(${VERSION_ARGS})
 
@@ -63,11 +63,6 @@ install(FILES REFERENCE.md DESTINATION ${CMAKE_ROOT}/Modules/webOS)
 #add_library(libhello SHARED src/hello.c)
 #webos_build_library(TARGET libhello RESTRICTED_PERMISSIONS)
 
-#webos_core_os_dep()
-#webos_machine_dep()
-#webos_machine_impl_dep()
-#webos_machine_variant_dep()
-#webos_soc_family_dep()
 #message(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 
 #webos_install_symlink(cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} ${WEBOS_INSTALL_DATADIR}/cmake)
